@@ -3,6 +3,10 @@
 #include "SDLJoystick.h"
 #include <system/System.h>
 
+#ifdef LIME_SDL_SOUND
+#include "SDL3_sound/SDL_sound.h"
+#endif
+
 #ifdef HX_MACOS
 #include <unistd.h>
 #endif
@@ -53,6 +57,14 @@ namespace lime {
 		}
 
 		SDL_SetEventFilter (HandleAppLifecycleEvent, NULL);
+
+		#ifdef LIME_SDL_SOUND
+		if (Sound_Init () == 0) {
+
+			printf ("Could not initialize SDL_sound: %s.\n", Sound_GetError ());
+
+		}
+		#endif
 
 		currentApplication = this;
 
@@ -762,6 +774,10 @@ namespace lime {
 
 		applicationEvent.type = EXIT;
 		ApplicationEvent::Dispatch (&applicationEvent);
+
+		#ifdef LIME_SDL_SOUND
+		Sound_Quit ();
+		#endif
 
 		SDL_Quit ();
 

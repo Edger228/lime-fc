@@ -241,6 +241,34 @@ class NativeCFFI
 
 	@:cffi private static function lime_sensor_event_manager_register(callback:Dynamic, eventObject:Dynamic):Void;
 
+	#if lime_sdlsound
+	@:cffi private static function lime_sdl_sound_from_file(path:String):Dynamic;
+
+	@:cffi private static function lime_sdl_sound_from_bytes(data:Dynamic):Dynamic;
+
+	@:cffi private static function lime_sdl_sound_free(sample:Dynamic):Void;
+
+	@:cffi private static function lime_sdl_sound_info(sample:Dynamic):Dynamic;
+
+	@:cffi private static function lime_sdl_sound_duration(sample:Dynamic):Int;
+
+	@:cffi private static function lime_sdl_sound_get_buffer_size(sample:Dynamic):Int;
+
+	@:cffi private static function lime_sdl_sound_set_buffer_size(sample:Dynamic, newSize:Int):Int;
+
+	@:cffi private static function lime_sdl_sound_decode(sample:Dynamic, buffer:Dynamic):Int;
+
+	@:cffi private static function lime_sdl_sound_decode_all(sample:Dynamic, buffer:Dynamic):Int;
+
+	@:cffi private static function lime_sdl_sound_seekable(sample:Dynamic):Bool;
+
+	@:cffi private static function lime_sdl_sound_seek(sample:Dynamic, position:Int):Void;
+
+	@:cffi private static function lime_sdl_sound_rewind(sample:Dynamic):Void;
+
+	@:cffi private static function lime_sdl_sound_get_flags(sample:Dynamic):Int;
+	#end
+
 	@:cffi private static function lime_system_get_allow_screen_timeout():Bool;
 
 	@:cffi private static function lime_system_set_allow_screen_timeout(value:Bool):Bool;
@@ -532,6 +560,22 @@ class NativeCFFI
 		"lime_render_event_manager_register", "oov", false));
 	private static var lime_sensor_event_manager_register = new cpp.Callable<cpp.Object->cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime",
 		"lime_sensor_event_manager_register", "oov", false));
+	#if lime_sdlsound
+	private static var lime_sdl_sound_from_file = new cpp.Callable<String->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_from_file", "so", false));
+	private static var lime_sdl_sound_from_bytes = new cpp.Callable<cpp.Object->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_from_bytes", "oo", false));
+	private static var lime_sdl_sound_free = new cpp.Callable<cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_free", "ov", false));
+	private static var lime_sdl_sound_info = new cpp.Callable<cpp.Object->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_info", "oo", false));
+	private static var lime_sdl_sound_duration = new cpp.Callable<cpp.Object->Int>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_duration", "oi", false));
+	private static var lime_sdl_sound_get_buffer_size = new cpp.Callable<cpp.Object->Int>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_get_buffer_size", "oi", false));
+	private static var lime_sdl_sound_set_buffer_size = new cpp.Callable<cpp.Object->Int->Bool>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_set_buffer_size", "oib", false));
+	private static var lime_sdl_sound_decode = new cpp.Callable<cpp.Object->cpp.Object->Int>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_decode", "ooi",
+		false));
+	private static var lime_sdl_sound_decode_all = new cpp.Callable<cpp.Object->cpp.Object->Int>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_decode_all", "ooi", false));
+	private static var lime_sdl_sound_seekable = new cpp.Callable<cpp.Object->Bool>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_seekable", "ob"));
+	private static var lime_sdl_sound_seek = new cpp.Callable<cpp.Object->Int->Void>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_seek", "oiv", false));
+	private static var lime_sdl_sound_rewind = new cpp.Callable<cpp.Object->Void>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_rewind", "ov", false));
+	private static var lime_sdl_sound_get_flags = new cpp.Callable<cpp.Object->Int>(cpp.Prime._loadPrime("lime", "lime_sdl_sound_get_flags", "oi", false));
+	#end
 	private static var lime_system_get_allow_screen_timeout = new cpp.Callable<Void->Bool>(cpp.Prime._loadPrime("lime",
 		"lime_system_get_allow_screen_timeout", "b", false));
 	private static var lime_system_set_allow_screen_timeout = new cpp.Callable<Bool->Bool>(cpp.Prime._loadPrime("lime",
@@ -738,6 +782,21 @@ class NativeCFFI
 	private static var lime_png_decode_file = CFFI.load("lime", "lime_png_decode_file", 3);
 	private static var lime_render_event_manager_register = CFFI.load("lime", "lime_render_event_manager_register", 2);
 	private static var lime_sensor_event_manager_register = CFFI.load("lime", "lime_sensor_event_manager_register", 2);
+	#if lime_sdlsound
+	private static var lime_sdl_sound_from_file:String->Dynamic = CFFI.load("lime", "lime_sdl_sound_from_file", 1);
+	private static var lime_sdl_sound_from_bytes:Dynamic->Dynamic = CFFI.load("lime", "lime_sdl_sound_from_bytes", 1);
+	private static var lime_sdl_sound_free:Dynamic->Void = CFFI.load("lime", "lime_sdl_sound_free", 1);
+	private static var lime_sdl_sound_info:Dynamic->Dynamic = CFFI.load("lime", "lime_sdl_sound_info", 1);
+	private static var lime_sdl_sound_duration:Dynamic->Int = CFFI.load("lime", "lime_sdl_sound_duration", 1);
+	private static var lime_sdl_sound_get_buffer_size:Dynamic->Int = CFFI.load("lime", "lime_sdl_sound_get_buffer_size", 1);
+	private static var lime_sdl_sound_set_buffer_size:Dynamic->Int->Bool = CFFI.load("lime", "lime_sdl_sound_set_buffer_size", 2);
+	private static var lime_sdl_sound_decode:Dynamic->Dynamic->Int = CFFI.load("lime", "lime_sdl_sound_decode", 2);
+	private static var lime_sdl_sound_decode_all:Dynamic->Dynamic->Int = CFFI.load("lime", "lime_sdl_sound_decode_all", 2);
+	private static var lime_sdl_sound_seekable:Dynamic->Bool = CFFI.load("lime", "lime_sdl_sound_seekable", 1);
+	private static var lime_sdl_sound_seek:Dynamic->Int->Void = CFFI.load("lime", "lime_sdl_sound_seek", 2);
+	private static var lime_sdl_sound_rewind:Dynamic->Void = CFFI.load("lime", "lime_sdl_sound_rewind", 1);
+	private static var lime_sdl_sound_get_flags:Dynamic->Int = CFFI.load("lime", "lime_sdl_sound_get_flags", 1);
+	#end
 	private static var lime_system_get_allow_screen_timeout = CFFI.load("lime", "lime_system_get_allow_screen_timeout", 0);
 	private static var lime_system_set_allow_screen_timeout = CFFI.load("lime", "lime_system_set_allow_screen_timeout", 1);
 	private static var lime_system_get_display_orientation = CFFI.load("lime", "lime_system_get_display_orientation", 1);
@@ -1175,6 +1234,62 @@ class NativeCFFI
 
 	@:hlNative("lime", "hl_sensor_event_manager_register") private static function lime_sensor_event_manager_register(callback:Void->Void,
 		eventObject:SensorEventInfo):Void {}
+
+	@:hlNative("lime", "hl_sdl_sound_from_file") private static function lime_sdl_sound_from_file(path:String):CFFIPointer
+	{
+		return null;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_from_bytes") private static function lime_sdl_sound_from_bytes(bytes:Bytes):CFFIPointer
+	{
+		return 0;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_free") private static function lime_sdl_sound_free(sample:CFFIPointer):Void {}
+
+	@:hlNative("lime", "hl_sdl_sound_info") private static function lime_sdl_sound_info(sample:CFFIPointer):Dynamic
+	{
+		return null;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_duration") private static function lime_sdl_sound_duration(sample:CFFIPointer):Int
+	{
+		return 0;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_get_buffer_size") private static function lime_sdl_sound_get_buffer_size(sample:CFFIPointer):Int
+	{
+		return 0;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_set_buffer_size") private static function lime_sdl_sound_set_buffer_size(sample:CFFIPointer, newSize:Int):Bool
+	{
+		return false;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_decode") private static function lime_sdl_sound_decode(sample:CFFIPointer, buffer:Bytes):Int
+	{
+		return 0;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_decode_all") private static function lime_sdl_sound_decode_all(sample:CFFIPointer, buffer:Bytes):Int
+	{
+		return 0;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_seekable") private static function lime_sdl_sound_seekable(sample:CFFIPointer):Bool
+	{
+		return false;
+	}
+
+	@:hlNative("lime", "hl_sdl_sound_seek") private static function lime_sdl_sound_seek(sample:CFFIPointer, position:Int):Void {}
+
+	@:hlNative("lime", "hl_sdl_sound_rewind") private static function lime_sdl_sound_rewind(sample:CFFIPointer):Void {}
+
+	@:hlNative("lime", "hl_sdl_sound_get_flags") private static function lime_sdl_sound_get_flags(sample:CFFIPointer):Int
+	{
+		return 0;
+	}
 
 	@:hlNative("lime", "hl_system_get_allow_screen_timeout") private static function lime_system_get_allow_screen_timeout():Bool
 	{

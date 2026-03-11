@@ -2,7 +2,7 @@ package lime.media;
 
 import lime.system.CFFIPointer;
 import haxe.MainLoop;
-#if (windows || mac || linux || android || ios)
+#if (windows || mac || linux || android)
 import haxe.io.Path;
 import lime.system.System;
 import sys.FileSystem;
@@ -42,8 +42,8 @@ class AudioManager
 				#if !lime_doc_gen
 				if (context.type == OPENAL)
 				{
-					#if (windows || mac || linux || android || ios)
-					setupConfig();
+					#if (windows || mac || linux || android)
+					__setupConfig();
 					#end
 
 					var alc = context.openal;
@@ -180,32 +180,34 @@ class AudioManager
 	}
 
 	@:noCompletion
-	private static function setupConfig():Void
+	private static function __setupConfig():Void
 	{
-		#if (lime_openal && (windows || mac || linux || android || ios))
-		final alConfig:Array<String> = [];
+		#if (lime_openal && (windows || mac || linux || android))
+		final alConfig:Array<String> = [
+			"[general]",
+			"channels=stereo",
+			"sample-type=float32",
+			"stereo-mode=speakers",
+			"stereo-encoding=panpot",
+			"hrtf=false",
+			"periods=4",
+			"cf_level=1",
+			"dither=false",
+			"resampler=fast_bsinc24",
+			"front-stablizer=false",
+			"output-limiter=false",
+			"volume-adjust=0",
+			"period_size=256",
 
-		alConfig.push('[general]');
-		alConfig.push('channels=stereo');
-		alConfig.push('sample-type=float32');
-		alConfig.push('stereo-mode=speakers');
-		alConfig.push('stereo-encoding=panpot');
-		alConfig.push('hrtf=false');
-		alConfig.push('cf_level=0');
-		alConfig.push('resampler=fast_bsinc24');
-		alConfig.push('front-stablizer=false');
-		alConfig.push('output-limiter=false');
-		alConfig.push('volume-adjust=0');
-		alConfig.push('period_size=441');
-
-		alConfig.push('[decoder]');
-		alConfig.push('hq-mode=false');
-		alConfig.push('distance-comp=false');
-		alConfig.push('nfc=false');
+			"[decoder]",
+			"hq-mode=true",
+			"distance-comp=false",
+			"nfc=false"
+		];
 
 		try
 		{
-			final directory:String = Path.directory(Path.withoutExtension(System.applicationStorageDirectory));
+			final directory:String = Path.join([#if mobile System.applicationStorageDirectory #else System.applicationDirectory #end, "plugins"]);
 			final path:String = Path.join([directory, #if windows 'audio-config.ini' #else 'audio-config.conf' #end]);
 			final content:String = alConfig.join('\n');
 
@@ -213,7 +215,7 @@ class AudioManager
 
 			if (!FileSystem.exists(path)) File.saveContent(path, content);
 
-			Sys.putEnv('ALSOFT_CONF', path);
+			Sys.putEnv("ALSOFT_CONF", path);
 		}
 		catch (e:Dynamic) {}
 		#end
