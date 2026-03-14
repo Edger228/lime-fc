@@ -44,9 +44,6 @@ namespace lime {
 			static std::wstring* GetPlatformLabel ();
 			static std::wstring* GetPlatformName ();
 			static std::wstring* GetPlatformVersion ();
-			#if LIME_SDL
-			static int GetTicks (); // what was eric thinking????
-			#endif
 			static double GetTimer ();
 			#if defined(HX_WINDOWS) && !defined (HX_WINRT)
 			static int GetWindowsConsoleMode (int handleType);
