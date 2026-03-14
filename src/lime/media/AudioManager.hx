@@ -5,7 +5,7 @@ import lime.media.openal.ALC;
 import lime.media.openal.ALDevice;
 import lime.system.CFFIPointer;
 import lime.utils.MainLoop;
-#if (windows || mac || linux || android)
+#if (windows || mac || linux || android || ios)
 import haxe.io.Path;
 import lime.system.System;
 import sys.FileSystem;
@@ -163,13 +163,14 @@ class AudioManager
 					var device = alc.getContextsDevice(currentContext);
 
 					if (device != null)
+					{
 						alc.reopenDeviceSOFT(device, null, null);
+					}
 				}
 				else
 				{
 					alc.reopenDeviceSOFT(device, null, null);
 				}
-
 			});
 		}
 		#end
