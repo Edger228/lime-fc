@@ -831,8 +831,13 @@ namespace lime {
 		frameTime.frame = frameTime.current - frameTime.previous;
 		frameTime.previous = frameTime.current;
 
+		// Micro-yield at >200k FPS to keep GPU driver responsive and window alive
+		if (frameTime.frame < 5000) {
+			SDL_Delay(0);
+		}
+
 		// If the frame was faster than the target frame time, delay to cap FPS
-		if (frameTime.frame < frameTime.target) {
+		if (frameTime.target > 0 && frameTime.frame < frameTime.target) {
 
 			// Pause for the remaining time to maintain a consistent frame rate
 			SDL_DelayPrecise (frameTime.target - frameTime.frame);
